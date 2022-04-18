@@ -23,16 +23,18 @@ Replace:
 
 <project_folder_location> with the path of this project downloaded in your system.
 
-### Step 3: Download glove.6B.100d.txt from internet and save it in Code folder.
+This will download the data, Glove file for word embeddings, and pretrained models of Naive-Bayes, LSTM, and ROBERTA
 
 ### Note: GPU with memory of at least 8 GB is required to run the python files. 
 
 
 ## Training Model
+Pretrained models are already available. If you still need to train the models then follows these steps.
+
 ### Step 1: Configuration
 The three available models for taining are Naive-Bayes, LSTM and ROBERTA.
 
-In Feedback_config.json file, change the value of "MODEL" to oe of the following:
+In Feedback_config.json file, change the value of "MODEL" to one of the following:
   - "naive-bayes" : Naive - Bayes model
   - "lstm" : LSTM model
   - "roberta" : ROBERTA model
