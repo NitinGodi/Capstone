@@ -39,7 +39,7 @@ if CONF['MODEL'] == 'naive-bayes':
 
     # Calculating Validation Accuracy and F1 score
     print(f'Validation accuracy= {accuracy_score(df_val["predictions"], df_val["label"])}')
-    print(f'Validation F1 score= {f1_score(df_val["predictions"], df_val["label"], average="micro")}')
+    print(f'Validation F1 score= {f1_score(df_val["predictions"], df_val["label"], average="macro")}')
 
 # Training and testing LSTM model
 elif CONF['MODEL'] == 'lstm':
