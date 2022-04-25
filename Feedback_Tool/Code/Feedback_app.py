@@ -76,7 +76,7 @@ def parse_contents(contents):
 # Higlights the different parts of essay with different colors
 def highlight(essay, model):
     # Get the final predictions
-    result = feedback_tool.get_result(model, essay)
+    result = Feedback_test.get_result(model, essay)
     # Assign colors to different sections of the essay
     split_essay = essay.split()
     cls, predstring = result['class'].values, result['predictionstring'].values
