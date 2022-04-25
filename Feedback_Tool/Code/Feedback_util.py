@@ -832,7 +832,7 @@ def train_model(dataloader, model, optimizer, use_gpu=True):
         for i in range(len(batch_label)):
             gr_tr = torch.masked_select(batch_label[i], mask[i])
             pr_tr = torch.masked_select(output[i], mask[i])
-            batch_f1 += f1_score(gr_tr.cpu(), pr_tr.cpu(), average='micro')
+            batch_f1 += f1_score(gr_tr.cpu(), pr_tr.cpu(), average='macro')
         f1.append(batch_f1/ len(mask))
     train_f1 = sum(f1) / batch_num
     print(f'Training F1 score: {train_f1}')
@@ -860,7 +860,7 @@ def evaluate(dataloader, model, use_gpu=True):
         for i in range(len(batch_label)):
             gr_tr = torch.masked_select(batch_label[i], mask[i])
             pr_tr = torch.masked_select(tag_seq[i], mask[i])
-            batch_f1 += f1_score(gr_tr.cpu(), pr_tr.cpu(), average='micro')
+            batch_f1 += f1_score(gr_tr.cpu(), pr_tr.cpu(), average='macro')
         f1.append(batch_f1 / len(mask))
     val_f1 = sum(f1) / batch_num
     print(f'Validation F1 score: {val_f1}')
