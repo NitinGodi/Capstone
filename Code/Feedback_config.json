@@ -1,6 +1,6 @@
 {
-  "TRAIN_CSV": "../train.csv",
-  "TRAIN_PATH": "../train/",
+  "TRAIN_CSV": "../Data/train.csv",
+  "TRAIN_PATH": "../Data/train/",
   "CLASS2ID": {
     "No Class": 0,
     "Claim": 1,
