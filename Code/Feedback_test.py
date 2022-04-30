@@ -54,7 +54,7 @@ def lstm(text):
     # Initializing the lstm model
     lstm_model = get_model('lstm', word_vocab, label_vocab, pretrain_word_embedding)
     # Loading the state dictionary of the saved lstm model
-    lstm_model.load_state_dict(torch.load('best_lstm_model.bin', map_location=torch.device('cpu')))
+    lstm_model.load_state_dict(torch.load(f'{CONF['MODEL_PATH']}/best_lstm_model.bin', map_location=torch.device('cpu')))
     # Preprocessing the data from the app
     text_split = text.split()
     input = []
