@@ -10,7 +10,7 @@ import Feedback_test
 
 # Initialize external style sheet and class to color mapper
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-cls_to_color_mapper = {'No Class':'black', 'Lead':'green', 'Position':'red', 'Claim':'blue', 'Counterclaim':'orange', 'Rebuttal':'yellow', 'Evidence':'purple', 'Concluding Statement':'magenta'}
+cls_to_color_mapper = {'No Class':'black', 'Lead':'green', 'Position':'red', 'Claim':'blue', 'Counterclaim':'orange', 'Rebuttal':'brown', 'Evidence':'purple', 'Concluding Statement':'magenta'}
 
 # App creations
 my_app = dash.Dash('capstone', external_stylesheets=external_stylesheets)
@@ -18,7 +18,7 @@ my_app = dash.Dash('capstone', external_stylesheets=external_stylesheets)
 # App layout
 my_app.layout = html.Div([
     # Page heading
-    html.H1('ESSAY STRUCTURE IDENTIFIER', style={'textAlign': 'center'}),
+    html.H1('Feedback Tool - Identifying Argumentative Essay Elements', style={'textAlign': 'center'}),
     html.Br(),
     html.Div([
         # Input section
@@ -59,7 +59,7 @@ my_app.layout = html.Div([
                   html.H5('Position', style={'color':'red','text-align':'right'}),
                   html.H5('Claim', style={'color':'blue','text-align':'right'}),
                   html.H5('Counterclaim', style={'color':'orange','text-align':'right'}),
-                  html.H5('Rebuttal', style={'color':'yellow','text-align':'right'}),
+                  html.H5('Rebuttal', style={'color':'brown','text-align':'right'}),
                   html.H5('Evidence', style={'color':'purple','text-align':'right'}),
                   html.H5('Concluding Statement', style={'color':'magenta','text-align':'right'})
                   ], style={'width':'10%','float':'right','margin-left':'5%'})
