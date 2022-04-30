@@ -12,6 +12,8 @@ unzip feedback-prize-2021.zip
 rm feedback-prize-2021.zip sample_submission.csv
 rm -R test
 cd $2/Code 
+mkdir pretrained_models
+cd pretrained_models
 curl -L "https://drive.google.com/file/d/1TXNCH2sVkEk9aWTUb4mi0PnDdNAOVLLH/view?usp=sharing" > glove.6B.100d.txt
 curl -L "https://drive.google.com/file/d/176qq84KDHT2PsFoRwSk4GjMO6E0TeBPK/view?usp=sharing" > naive_bayes_model.pkl
 curl -L "https://drive.google.com/file/d/198DhrmxEFTGnXuuqTuu_s25he90DdznE/view?usp=sharing" > best_lstm_model.bin
