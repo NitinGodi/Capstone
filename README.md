@@ -25,8 +25,6 @@ Replace:
 
 This will download the data, Glove file for word embeddings, and pretrained models of Naive-Bayes, LSTM, and ROBERTA
 
-### Note: GPU with memory of at least 8 GB is required to run the python files. 
-
 
 ## Training Model
 Pretrained models are already available. If you still need to train the models then follows these steps.
@@ -41,6 +39,7 @@ In Feedback_config.json file, change the value of "MODEL" to one of the followin
 
 ### Step 2: Run Feedback_train.py file
 
+### Note: GPU with memory of at least 16 GB is required for training the models. Change the batch sizes in the 'Feedback-config.json' file while using smaller GPUs. 
 
 ## Application
 ### Step 1: Run Feedback_app.py file
