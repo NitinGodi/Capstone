@@ -39,7 +39,7 @@ In Feedback_config.json file, change the value of "MODEL" to one of the followin
 
 ### Step 2: Run Feedback_train.py file
 
-### Note: GPU with memory of at least 16 GB is required for training the models. Change the batch sizes in the 'Feedback-config.json' file while using smaller GPUs. 
+##### Note: GPU with memory of at least 16 GB is required for training the models. Change the batch sizes in the 'Feedback-config.json' file while using smaller GPUs. 
 
 ## Application
 ### Step 1: Run Feedback_app.py file
