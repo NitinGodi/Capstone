@@ -32,7 +32,7 @@
   "MAX_WORDS": 10000,
   "EMBEDDING_DIM": 300,
   "MAX_LEN": 512,
-  "MODEL_PATH": "model",
+  "MODEL_PATH": "pretrained_models",
   "DOC_STRIDE": 200,
   "MODEL_NAME": "roberta-base",
   "CONFIG": {
