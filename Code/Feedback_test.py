@@ -31,7 +31,7 @@ def naive_bayes(text):
         pred_string.append(l)
         start += length
     # Loading the naive-bayes pipeline
-    nb_model = pickle.load(open('naive_bayes_model.pkl', 'rb'))
+    nb_model = pickle.load(open(f'{CONF['MODEL_PATH']}/naive_bayes_model.pkl', 'rb'))
     # Making predictions
     y_pred = nb_model.predict(lines)
     # Formatting and returning the predictions
