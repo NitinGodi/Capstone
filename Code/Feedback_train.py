@@ -9,7 +9,7 @@ from Feedback_model_selection import get_model
 import json
 from Feedback_util import lr_decay, train_model, evaluate
 
-
+print('Executing')
 # Initialize and load configuration variables
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 f = open('Feedback_config.json')
@@ -40,6 +40,7 @@ if CONF['MODEL'] == 'naive-bayes':
     # Calculating Validation Accuracy and F1 score
     print(f'Validation accuracy= {accuracy_score(df_val["predictions"], df_val["label"])}')
     print(f'Validation F1 score= {f1_score(df_val["predictions"], df_val["label"], average="macro")}')
+    print(f'Validation Cohen Kappa score= {f1_score(df_val["predictions"], df_val["label"], average="macro")}')
 
 # Training and testing LSTM model
 elif CONF['MODEL'] == 'lstm':

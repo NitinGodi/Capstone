@@ -7,7 +7,7 @@ import numpy as np
 from collections import defaultdict
 from tqdm.auto import tqdm
 import nltk
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, cohen_kappa_score
 import torch
 from torch.utils.data import Dataset, DataLoader
 from transformers import AutoTokenizer, AutoModelForTokenClassification, RobertaTokenizerFast
@@ -287,7 +287,6 @@ def train(roberta_model, optimizer, dl_train, epoch):
     print(epoch_prefix)
     print(f"{epoch_prefix} Training loss    : {epoch_loss:.4f}")
     print(f"{epoch_prefix} Training accuracy: {tr_accuracy:.4f}")
-    print(f"{epoch_prefix} Model saved to pytorch_model_e{epoch}.bin  [{elapsed / 60:.2f} mins]")
     print(epoch_prefix)
     del ids, mask, labels
 
@@ -423,7 +422,8 @@ def score_feedback_comp(pred_df, gt_df):
     # calc microf1
     my_f1_score = TP / (TP + 0.5 * (FP + FN))
     my_acc = (TP + TN)/(TP+TN+FP+FN)
-    return my_f1_score, my_acc
+    my_ck = (2 * (TP * TN - FN * FP)) / ((TP + FP) * (FP + TN) + (TP + FN) * (FN + TN))
+    return my_f1_score, my_acc, my_ck
 
 # Validation process for the Transformer model
 def validate(roberta_model, df_all, df_val, dl_val, epoch, valid_idx, unique_ids):
@@ -441,24 +441,27 @@ def validate(roberta_model, df_all, df_val, dl_val, epoch, valid_idx, unique_ids
     # Compute F1-score ans Accuracy
     f1s = []
     accs = []
+    cks = []
     classes = oof['class'].unique()
 
     epoch_prefix = f"[Epoch {epoch + 1:2d} / {CONF['CONFIG']['epochs']:2d}]"
-    print(f"{epoch_prefix} Validation F1 scores")
+    print(f"{epoch_prefix} Validation scores")
 
     for c in classes:
         pred_df = oof.loc[oof['class'] == c].copy()
         gt_df = df_valid.loc[df_valid['discourse_type'] == c].copy()
-        f1, acc = score_feedback_comp(pred_df, gt_df)
-        print(f"{epoch_prefix}   * {c:<10} \t F1: {f1:4f} \t Accuracy: {acc:4f}")
+        f1, acc, ck = score_feedback_comp(pred_df, gt_df)
+        print(f"{epoch_prefix}   * {c:<10} \t F1: {f1:4f} \t Accuracy: {acc:4f} \t Cohen Kappa: {ck:4f}")
         f1s.append(f1)
         accs.append(acc)
+        cks.append(ck)
 
     epoch_f1 = np.mean(f1s)
     elapsed = time.time() - time_start
     print(epoch_prefix)
-    print(f'{epoch_prefix} Overall Validation F1: {epoch_f1:.4f} [{elapsed:.2f} secs]')
+    print(f'{epoch_prefix} Overall Validation F1 score: {epoch_f1:.4f} [{elapsed:.2f} secs]')
     print(f'{epoch_prefix} Overall Validation Accuracy: {np.mean(accs):.4f} [{elapsed:.2f} secs]')
+    print(f'{epoch_prefix} Overall Validation Cohen Kappa score: {np.mean(cks):.4f} [{elapsed:.2f} secs]')
     print(epoch_prefix)
     return epoch_f1
 
@@ -842,10 +845,10 @@ def evaluate(dataloader, model, use_gpu=True):
     # Put model in evaluation mode
     model.eval()
     batch_num = 0
-    f1 = []
+    f1, acc, ck = [], [], []
     for batch in dataloader:
         batch_num += 1
-        batch_f1 = 0
+        batch_f1, batch_acc, batch_kappa = 0, 0, 0
         batch_text, seq_length, word_perm_idx = batch['text']
         batch_label, _, _ = batch['label']
         if use_gpu:
@@ -861,7 +864,15 @@ def evaluate(dataloader, model, use_gpu=True):
             gr_tr = torch.masked_select(batch_label[i], mask[i])
             pr_tr = torch.masked_select(tag_seq[i], mask[i])
             batch_f1 += f1_score(gr_tr.cpu(), pr_tr.cpu(), average='macro')
+            batch_acc += accuracy_score(gr_tr.cpu(), pr_tr.cpu())
+            batch_kappa += cohen_kappa_score(gr_tr.cpu(), pr_tr.cpu())
         f1.append(batch_f1 / len(mask))
+        acc.append(batch_acc/ len(mask))
+        ck.append(batch_kappa/ len(mask))
     val_f1 = sum(f1) / batch_num
+    val_acc = sum(acc) / batch_num
+    val_ck = sum(ck) / batch_num
     print(f'Validation F1 score: {val_f1}')
+    print(f'Validation Accuracy: {val_acc}')
+    print(f'Validation Cohen Kappa score: {val_ck}')
     return val_f1
