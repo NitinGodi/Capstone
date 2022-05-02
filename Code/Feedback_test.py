@@ -31,7 +31,7 @@ def naive_bayes(text):
         pred_string.append(l)
         start += length
     # Loading the naive-bayes pipeline
-    nb_model = pickle.load(open(f'{CONF['MODEL_PATH']}/naive_bayes_model.pkl', 'rb'))
+    nb_model = pickle.load(open(f'{CONF["MODEL_PATH"]}/naive_bayes_model.pkl', 'rb'))
     # Making predictions
     y_pred = nb_model.predict(lines)
     # Formatting and returning the predictions
@@ -54,7 +54,7 @@ def lstm(text):
     # Initializing the lstm model
     lstm_model = get_model('lstm', word_vocab, label_vocab, pretrain_word_embedding)
     # Loading the state dictionary of the saved lstm model
-    lstm_model.load_state_dict(torch.load(f'{CONF['MODEL_PATH']}/best_lstm_model.bin', map_location=torch.device('cpu')))
+    lstm_model.load_state_dict(torch.load(f'{CONF["MODEL_PATH"]}/best_lstm_model.bin', map_location=torch.device('cpu')))
     # Preprocessing the data from the app
     text_split = text.split()
     input = []
