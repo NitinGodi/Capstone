@@ -31,7 +31,7 @@ if CONF['MODEL'] == 'naive-bayes':
     nb_model = nb_pipeline.fit(df_train["text"], df_train["label"])
 
     # Saving the model
-    pickle.dump(nb_model, open(f'{CONF['MODEL_PATH']}/naive_bayes_model.pkl','wb'))
+    pickle.dump(nb_model, open(f'{CONF["MODEL_PATH"]}/naive_bayes_model.pkl','wb'))
 
     # Predicting classes for sentences in validation set
     df_val['predictions'] = nb_model.predict(df_val['text'])
@@ -73,7 +73,7 @@ elif CONF['MODEL'] == 'lstm':
             best_f1 = new_f1
             print('New best f1:', best_f1)
             early_stop = 0
-            torch.save(lstm_model.state_dict(), f'{CONF['MODEL_PATH']}/best_lstm_model.bin')
+            torch.save(lstm_model.state_dict(), f'{CONF["MODEL_PATH"]}/best_lstm_model.bin')
         else:
             early_stop += 1
 
@@ -100,4 +100,4 @@ elif CONF['MODEL'] == 'roberta':
         if f1 > best_f1:
             best_f1 = f1
             # Saving the model
-            torch.save(roberta_model.state_dict(), f'{CONF['MODEL_PATH']}/best_roberta_model.bin')
+            torch.save(roberta_model.state_dict(), f'{CONF["MODEL_PATH"]}/best_roberta_model.bin')
