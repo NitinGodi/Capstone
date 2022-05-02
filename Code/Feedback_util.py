@@ -465,7 +465,7 @@ def validate(roberta_model, df_all, df_val, dl_val, epoch, valid_idx, unique_ids
 # Load state dictionary of Transformer model
 def load_model():
     model = AutoModelForTokenClassification.from_pretrained(CONF['MODEL_NAME'])
-    model.load_state_dict(torch.load(f'{CONF['MODEL_PATH']}/best_roberta_model.bin', map_location='cpu'))
+    model.load_state_dict(torch.load(f'{CONF["MODEL_PATH"]}/best_roberta_model.bin', map_location='cpu'))
     model.eval()
     print('Model loaded.')
     return model
